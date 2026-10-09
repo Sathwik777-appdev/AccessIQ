@@ -73,17 +73,7 @@ export default function Layout() {
                 className="flex items-center gap-2.5 group focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-lg py-1 px-1 -ml-1 transition-colors"
                 aria-label="AccessIQ Home"
               >
-                <div className="w-8 h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center shadow-xs group-hover:bg-slate-800 transition-colors">
-                  <Shield className="h-4 w-4 text-emerald-400" aria-hidden="true" />
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-base font-bold tracking-tight text-slate-900 leading-none">
-                    AccessIQ
-                  </span>
-                  <span className="text-[10px] font-semibold text-slate-600 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded">
-                    GovTech
-                  </span>
-                </div>
+                <img src="/logo.png" alt="AccessIQ" className="h-8 object-contain" />
               </Link>
 
               {/* Navigation Tabs */}
