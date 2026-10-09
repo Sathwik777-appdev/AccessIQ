@@ -110,11 +110,11 @@ export const ExecutiveBrief: React.FC = () => {
       {/* Top Action Bar — Hidden on Print */}
       <div className="flex items-center justify-between gap-4 print:hidden">
         <Link
-          to="/field-audit"
+          to="/"
           className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-slate-900 bg-white border border-slate-200 px-3.5 py-2 rounded-xl shadow-xs transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
         >
           <ArrowLeft size={16} />
-          <span>{language === 'kn' ? 'ಕ್ಷೇತ್ರ ಪರಿಶೀಲನೆಗೆ ಹಿಂತಿರುಗಿ' : 'Back to Field Audit'}</span>
+          <span>{language === 'kn' ? 'ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಹಿಂತಿರುಗಿ' : 'Back to Dashboard'}</span>
         </Link>
 
         <div className="flex flex-wrap items-center gap-2">

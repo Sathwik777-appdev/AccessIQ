@@ -6,7 +6,7 @@ import SiteDetail from './pages/SiteDetail';
 import ComparisonView from './pages/ComparisonView';
 import ExecutiveReport from './pages/ExecutiveReport';
 import Remediations from './pages/Remediations';
-import { FieldAudit } from './pages/FieldAudit';
+
 import { ExecutiveBrief } from './pages/ExecutiveBrief';
 import { LanguageProvider } from './context/LanguageContext';
 
@@ -23,7 +23,7 @@ function App() {
             <Route path="/remediations" element={<Remediations />} />
             <Route path="/compare" element={<ComparisonView />} />
             <Route path="/compare/:beforeId/:afterId" element={<ComparisonView />} />
-            <Route path="/field-audit" element={<FieldAudit />} />
+
             <Route path="/executive-brief" element={<ExecutiveBrief />} />
           </Route>
         </Routes>
