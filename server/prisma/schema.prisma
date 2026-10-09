@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model ScanTarget {
+  id        String   @id @default(uuid())
+  url       String   @unique
+  siteName  String
+  siteType  String   // central-govt, state-govt, psu, municipal, international-benchmark, demo-page
+  country   String   @default("India")
+  createdAt DateTime @default(now())
+  scans     ScanResult[]
+  scanJobs  ScanJob[]
+}
+
+model ScanResult {
+  id                 String      @id @default(uuid())
+  scanTargetId       String
+  scanTarget         ScanTarget  @relation(fields: [scanTargetId], references: [id], onDelete: Cascade)
+  timestamp          DateTime    @default(now())
+  url                String
+  tool               String      @default("axe-core")
+  wcagVersion        String      @default("2.2")
+  conformanceTarget  String      @default("AA")
+  totalViolations    Int
+  criticalCount      Int         @default(0)
+  seriousCount       Int         @default(0)
+  moderateCount      Int         @default(0)
+  minorCount         Int         @default(0)
+  lighthouseScore    Float?
+  scanDurationMs     Int         @default(0)
+  error              String?
+  violations         Violation[]
+
+  @@index([scanTargetId])
+  @@index([timestamp])
+}
+
+model Violation {
+  id                String     @id @default(uuid())
+  scanResultId      String
+  scanResult        ScanResult @relation(fields: [scanResultId], references: [id], onDelete: Cascade)
+  ruleId            String
+  wcagCriterion     String
+  wcagCriterionName String
+  gigwCheckpoint    String?
+  principle         String     // Perceivable, Operable, Understandable, Robust
+  severity          String     // critical, serious, moderate, minor
+  description       String
+  helpUrl           String
+  selector          String
+  htmlSnippet       String
+  nodeCount         Int        @default(1)
+  remediation       String?
+  suggestedFixSnippet String?
+  userImpact         String?
+  effort             String?
+  wcagLevel          String?
+
+  @@index([scanResultId])
+  @@index([ruleId])
+  @@index([severity])
+  @@index([principle])
+}
+
+model ScanJob {
+  jobId         String   @id @default(uuid())
+  scanTargetId  String
+  scanTarget    ScanTarget @relation(fields: [scanTargetId], references: [id], onDelete: Cascade)
+  status        String   @default("pending") // pending, running, completed, failed
+  scanResultId  String?
+  error         String?
+  createdAt     DateTime @default(now())
+  completedAt   DateTime?
+
+  @@index([scanTargetId])
+}
+
+// ─── Field Audit Models ─────────────────────────────────────────────
+
+model FieldAuditReport {
+  id             String   @id @default(uuid())
+  officeName     String
+  location       String
+  inspectorName  String
+  totalScore     Int
+  maxScore       Int
+  scorePercent   Int      @default(0)
+  createdAt      DateTime @default(now())
+  findings       FieldAuditFinding[]
+  photos         FieldAuditPhoto[]
+}
+
+model FieldAuditFinding {
+  id              String   @id @default(uuid())
+  reportId        String
+  report          FieldAuditReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  checklistItemId String
+  passed          Boolean
+  notes           String?
+
+  @@index([reportId])
+}
+
+model FieldAuditPhoto {
+  id        String   @id @default(uuid())
+  reportId  String
+  report    FieldAuditReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  caption   String
+  category  String
+  dataUrl   String
+
+  @@index([reportId])
+}

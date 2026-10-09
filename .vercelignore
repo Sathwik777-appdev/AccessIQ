@@ -1,0 +1,10 @@
+/server/
+/scanner/
+/demo-pages/
+/data/
+/docs/
+/.github/
+/Dockerfile*
+/docker-compose.yml
+/deploy-cloudrun.sh
+*.md

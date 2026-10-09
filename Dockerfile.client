@@ -1,0 +1,38 @@
+FROM node:20-slim AS builder
+
+WORKDIR /app
+
+COPY package.json tsconfig.base.json ./
+COPY types/package.json ./types/
+COPY client/package.json ./client/
+COPY scanner/package.json ./scanner/
+COPY server/package.json ./server/
+
+RUN npm install
+
+COPY types ./types
+COPY client ./client
+
+RUN npm run build -w types
+RUN npm run build -w client
+
+FROM nginxinc/nginx-unprivileged:alpine AS runner
+
+COPY --from=builder /app/client/dist /usr/share/nginx/html
+
+# Custom nginx config to support React router SPA fallback and API proxy
+RUN echo 'server {' > /etc/nginx/conf.d/default.conf && \
+    echo '  listen 8080;' >> /etc/nginx/conf.d/default.conf && \
+    echo '  location / {' >> /etc/nginx/conf.d/default.conf && \
+    echo '    root /usr/share/nginx/html;' >> /etc/nginx/conf.d/default.conf && \
+    echo '    index index.html;' >> /etc/nginx/conf.d/default.conf && \
+    echo '    try_files $uri $uri/ /index.html;' >> /etc/nginx/conf.d/default.conf && \
+    echo '  }' >> /etc/nginx/conf.d/default.conf && \
+    echo '  location /api/ {' >> /etc/nginx/conf.d/default.conf && \
+    echo '    proxy_pass http://server:3001/api/;' >> /etc/nginx/conf.d/default.conf && \
+    echo '  }' >> /etc/nginx/conf.d/default.conf && \
+    echo '}' >> /etc/nginx/conf.d/default.conf
+
+EXPOSE 8080
+
+CMD ["nginx", "-g", "daemon off;"]

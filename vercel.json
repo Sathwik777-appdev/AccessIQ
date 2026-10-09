@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build -w types && npm run build -w client",
+  "outputDirectory": "client/dist",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://accessiq-u4cigcxmea-el.a.run.app/api/$1"
+    },
+    {
+      "source": "/demo/(.*)",
+      "destination": "https://accessiq-u4cigcxmea-el.a.run.app/demo/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

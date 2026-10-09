@@ -1,0 +1,80 @@
+### AccessIQ API Reference
+### Base URL: http://localhost:3001
+
+## ============================================================
+## Health Check
+## ============================================================
+
+### Health Check
+GET http://localhost:3001/api/health
+
+## ============================================================
+## Targets
+## ============================================================
+
+### List all targets with latest scan summary
+GET http://localhost:3001/api/targets
+
+### Add a new target
+POST http://localhost:3001/api/targets
+Content-Type: application/json
+
+{
+  "url": "https://india.gov.in",
+  "siteName": "National Portal of India",
+  "siteType": "central-govt",
+  "country": "India"
+}
+
+### Add demo page targets
+POST http://localhost:3001/api/targets
+Content-Type: application/json
+
+{
+  "url": "http://localhost:3001/demo/before.html",
+  "siteName": "Demo Before (Violations)",
+  "siteType": "demo-page",
+  "country": "India"
+}
+
+###
+POST http://localhost:3001/api/targets
+Content-Type: application/json
+
+{
+  "url": "http://localhost:3001/demo/after.html",
+  "siteName": "Demo After (Remediated)",
+  "siteType": "demo-page",
+  "country": "India"
+}
+
+## ============================================================
+## Scans
+## ============================================================
+
+### Trigger a new scan (replace scanTargetId with actual ID)
+POST http://localhost:3001/api/scans
+Content-Type: application/json
+
+{
+  "scanTargetId": "REPLACE_WITH_TARGET_ID"
+}
+
+### Check scan job status (replace with actual jobId)
+GET http://localhost:3001/api/scans/REPLACE_WITH_JOB_ID/status
+
+### Get full scan result (replace with actual scan result ID)
+GET http://localhost:3001/api/scans/REPLACE_WITH_SCAN_ID
+
+### Compare two scans (replace with actual scan IDs)
+GET http://localhost:3001/api/scans/REPLACE_WITH_BEFORE_ID/compare/REPLACE_WITH_AFTER_ID
+
+## ============================================================
+## Dashboard
+## ============================================================
+
+### Dashboard summary
+GET http://localhost:3001/api/dashboard/summary
+
+### Benchmark comparison (WebAIM Million data)
+GET http://localhost:3001/api/dashboard/benchmark

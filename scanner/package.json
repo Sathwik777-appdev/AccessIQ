@@ -1,0 +1,29 @@
+{
+  "name": "@accessiq/scanner",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "scan": "ts-node src/cli.ts",
+    "scan:batch": "ts-node src/batch.ts"
+  },
+  "dependencies": {
+    "@accessiq/types": "*",
+    "@axe-core/playwright": "^4.9.0",
+    "@prisma/client": "^5.12.0",
+    "chalk": "^4.1.2",
+    "cli-table3": "^0.6.4",
+    "commander": "^12.0.0",
+    "playwright": "^1.43.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/uuid": "^9.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.4.0"
+  }
+}

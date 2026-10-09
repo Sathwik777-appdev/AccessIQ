@@ -1,0 +1,8 @@
+{
+  "description": "Baseline accessibility scan for demo-pages/after.html. The after page should have 0 violations after remediation.",
+  "expectedViolations": 0,
+  "wcagVersion": "2.2",
+  "conformanceTarget": "AA",
+  "lastUpdated": "2024-01-01T00:00:00Z",
+  "notes": "If the after.html page introduces any new violations, the CI pipeline will fail. Update this baseline only after intentional changes."
+}

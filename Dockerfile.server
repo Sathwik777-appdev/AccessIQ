@@ -1,0 +1,53 @@
+FROM node:20-slim AS builder
+
+WORKDIR /app
+
+# Install build essentials
+RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
+
+# Copy package manifests
+COPY package.json tsconfig.base.json ./
+COPY types/package.json ./types/
+COPY scanner/package.json ./scanner/
+COPY server/package.json ./server/
+COPY client/package.json ./client/
+
+# Install dependencies
+RUN npm install
+
+# Copy source code
+COPY types ./types
+COPY scanner ./scanner
+COPY server ./server
+
+# Build packages
+RUN npm run build -w types
+RUN npm run build -w scanner
+RUN cd server && npx prisma generate && npm run build
+
+FROM node:20-slim AS runner
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y openssl curl && rm -rf /var/lib/apt/lists/*
+
+# Install Playwright dependencies and Chromium
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+RUN npx -y playwright install --with-deps chromium
+
+COPY package.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/types/dist ./types/dist
+COPY --from=builder /app/types/package.json ./types/package.json
+COPY --from=builder /app/scanner/dist ./scanner/dist
+COPY --from=builder /app/scanner/package.json ./scanner/package.json
+COPY --from=builder /app/server/dist ./server/dist
+COPY --from=builder /app/server/package.json ./server/package.json
+COPY --from=builder /app/server/prisma ./server/prisma
+
+EXPOSE 3001
+
+# Run as non-root user for security
+USER node
+
+CMD ["node", "server/dist/index.js"]

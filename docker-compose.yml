@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    ports:
+      - "${SERVER_PORT:-3001}:3001"
+    environment:
+      - PORT=${SERVER_PORT:-3001}
+      - DATABASE_URL=file:/app/data/accessiq.db
+      - CLIENT_ORIGIN=${CLIENT_ORIGIN:-http://localhost:5173}
+    volumes:
+      - db-data:/app/data
+      - ./demo-pages:/app/demo-pages:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    ports:
+      - "5173:8080"
+    depends_on:
+      server:
+        condition: service_healthy
+
+volumes:
+  db-data:
+    driver: local
