@@ -140,7 +140,7 @@ export interface ComparisonResult {
   }>;
 }
 
-const API_BASE = (import.meta as any).env?.VITE_API_URL || '/api';
+const API_BASE = (import.meta as any).env?.VITE_API_URL || 'https://accessiqserver-production.up.railway.app/api';
 
 async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${url}`, {
