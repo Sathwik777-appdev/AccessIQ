@@ -170,9 +170,7 @@ export const ExecutiveBrief: React.FC = () => {
         <div className="border-b-2 border-slate-900 pb-6 mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-2xl shadow-md border border-slate-800">
-                <Shield size={32} className="text-emerald-400" />
-              </div>
+              <img src="/logo.png" alt="AccessIQ Logo" className="h-14 object-contain" />
               <div>
                 <span className="text-[11px] font-black tracking-widest uppercase text-slate-600 block">
                   GOVERNMENT OF KARNATAKA · ZILLA PANCHAYAT UDUPI

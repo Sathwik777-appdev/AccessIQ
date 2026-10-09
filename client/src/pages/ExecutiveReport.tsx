@@ -166,9 +166,7 @@ export const ExecutiveReport: React.FC = () => {
       <div className="glass-card rounded-3xl p-6 sm:p-8 shadow-xl print:border-none print:shadow-none print:p-0">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
           <div className="flex items-center gap-3.5">
-            <div className="p-3 bg-primary-700 text-white rounded-xl">
-              <Shield className="h-8 w-8" />
-            </div>
+            <img src="/logo.png" alt="AccessIQ Logo" className="h-14 object-contain" />
             <div>
               <span className="text-xs uppercase font-extrabold tracking-wider text-primary-700">
                 Official Compliance Assessment

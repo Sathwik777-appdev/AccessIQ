@@ -180,8 +180,7 @@ export default function Layout() {
         <footer className="bg-white/80 backdrop-blur-md text-slate-600 py-6 mt-auto border-t border-slate-200/90 print:hidden relative z-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
             <p className="flex items-center gap-2">
-              <Shield size={14} className="text-slate-700" />
-              <span className="font-semibold text-slate-800">AccessIQ</span>
+              <img src="/logo.png" alt="AccessIQ" className="h-4 object-contain" />
               <span>• Digital Inclusion & Compliance Platform</span>
             </p>
             <p className="text-slate-600">Conforms to WCAG 2.2 Level AA & Indian Government Guidelines (GIGW 3.0)</p>
