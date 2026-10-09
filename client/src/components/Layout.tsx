@@ -5,7 +5,7 @@ import {
   Globe,
   Wrench,
   GitCompare,
-  Shield,
+  
   Sparkles,
 
   Eye,
