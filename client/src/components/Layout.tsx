@@ -7,7 +7,7 @@ import {
   GitCompare,
   Shield,
   Sparkles,
-  ClipboardList,
+
   Eye,
   Languages,
   FileText,
@@ -27,7 +27,7 @@ export default function Layout() {
     { to: '/sites', label: t('navSites'), icon: Globe },
     { to: '/remediations', label: t('navRemediations'), icon: Wrench },
     { to: '/compare', label: t('navCompare'), icon: GitCompare },
-    { to: '/field-audit', label: t('navFieldAudit'), icon: ClipboardList },
+
     { to: '/executive-brief', label: t('navExecutiveBrief'), icon: FileText },
   ];
 
