@@ -90,10 +90,17 @@ export async function scanUrl(url: string, options: ScanOptions = {}): Promise<S
     const page: Page = await context.newPage();
 
     // Navigate to the URL with timeout
-    await page.goto(url, {
-      waitUntil: 'domcontentloaded',
-      timeout,
-    });
+    try {
+      await page.goto(url, {
+        waitUntil: 'domcontentloaded',
+        timeout,
+      });
+    } catch (e: any) {
+      if (e.message.includes('ERR_NAME_NOT_RESOLVED') || e.message.includes('ERR_CONNECTION_REFUSED') || e.message.includes('ERR_CONNECTION_TIMED_OUT')) {
+        throw new Error('Website not found! Enter a valid Website');
+      }
+      throw e;
+    }
 
     // Optional: wait for a specific selector
     if (options.waitForSelector) {
