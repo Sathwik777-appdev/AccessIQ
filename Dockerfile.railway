@@ -1,0 +1,26 @@
+FROM mcr.microsoft.com/playwright:v1.44.0-jammy
+
+WORKDIR /app
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+
+COPY package*.json ./
+COPY types/package*.json ./types/
+COPY scanner/package*.json ./scanner/
+COPY server/package*.json ./server/
+COPY tsconfig*.json ./
+
+RUN npm ci
+
+COPY types ./types
+COPY scanner ./scanner
+COPY server ./server
+
+RUN npx prisma generate --schema=./server/prisma/schema.prisma
+RUN npx tsc -b
+
+RUN mkdir -p /app/data
+ENV DATABASE_URL="file:/app/data/accessiq.db"
+ENV PORT=3001
+
+CMD npx prisma db push --schema=./server/prisma/schema.prisma --accept-data-loss && node server/dist/index.js
